@@ -92,30 +92,32 @@ The project is organized as follows:
 
 	```
 	/ErdosNewsFinanceProject
-	├── config/             # Experiment setup by YAML files
-	├── src/                # Source code files
-	│   ├── driver/         # Driver scripts to control pipelines in the engine
-	│   ├── ingestion/      # Data ingestion
-	│   ├── clean/          # Data preprocessing
-	│   ├── model_fin/      # Model scripts for finance data
-	│   ├── model_news/     # Model scripts for news data
-	│   ├── evaluation/     # Model evaluation
-	│   └── utils/          # Utility functions (reusable functions in the engine)
-	├── scripts/            # Shell scripts to run engine driver
-	├── notebook/           # Jupyter notebook for visualization or small experiments
-	├── data/               # Data files
-	│   ├── figures/        # Figure files
-	│   └── models/         # Model files
-	├── tests/              # Test files
-	├── doc/                # Project documentation
-	├── .gitignore          # Git ignore file
-	├── README.md           # Project introduction
-	├── pyproject.toml      # Poetry file to control dependencies
-	├── poetry.lock         # Poetry file
-	└── CONTRIBUTING.md     # Contribution guidelines
+	├── config/            					 # Experiment setup by TOML files
+	├── src/               					 # Source code files
+	│   ├── engine             				 # Code files for each feature
+	│   │   ├── ingestion/     				 # Data ingestion
+	│   │   ├── clean/         				 # Data preprocessing
+	│   │   ├── model_fin/     				 # Model scripts for finance data
+	│   │   ├── model_news/    				 # Model scripts for news data
+	│   │   ├── model_prediction/  			 # Model scripts for prediction
+	│   │   └── model_eval/    				 # Model evaluation
+	│   ├── utils/         					 # Utility functions (reusable functions in all other folders)
+	│   └── predict_stock_w_news.py 		 # The main file to call all drivers (steps) in enginie related to predicting stock price with news topics
+	├── scripts/           					 # Shell scripts to run engine driver
+	├── notebook/          					 # Jupyter notebook for visualization or small experiments
+	├── data/              					 # Data files (small size, core data should store in Google Drive)
+	│   ├── figures/       					 # Figure files
+	│   └── models/        					 # Model files
+	├── tests/             					 # Test files
+	├── doc/               					 # Project documentation
+	├── .gitignore         					 # Git ignore file
+	├── README.md          					 # Project introduction
+	├── pyproject.toml     					 # Poetry file to control dependencies
+	├── poetry.lock        					 # Poetry file
+	└── CONTRIBUTING.md    					 # Contribution guidelines
 	```
 
-This structure helps in maintaining a clean and organized codebase, making it easier to navigate and contribute to the project.
+	This structure helps in maintaining a clean and organized codebase, making it easier to navigate and contribute to the project.
 
 # Configure the Experiment and Run Scripts
 
