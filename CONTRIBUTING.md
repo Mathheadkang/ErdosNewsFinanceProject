@@ -90,51 +90,50 @@ To report issues, please use the [GitHub Issues page](https://github.com/your-re
 
 The project is organized as follows:
 
-	```
-	/ErdosNewsFinanceProject
-	├── config/            					 # Experiment setup by TOML files
-	├── src/               					 # Source code files
-	│   ├── engine             				 # Code files for each feature
-	│   │   ├── ingestion/     				 # Data ingestion
-	│   │   ├── clean/         				 # Data preprocessing
-	│   │   ├── model_fin/     				 # Model scripts for finance data
-	│   │   ├── model_news/    				 # Model scripts for news data
-	│   │   ├── model_prediction/  			 # Model scripts for prediction
-	│   │   └── model_eval/    				 # Model evaluation
-	│   ├── utils/         					 # Utility functions (reusable functions in all other folders)
-	│   └── predict_stock_w_news.py 		 # The main file to call all drivers (steps) in enginie related to predicting stock price with news topics
-	├── scripts/           					 # Shell scripts to run engine driver
-	├── notebook/          					 # Jupyter notebook for visualization or small experiments
-	├── data/              					 # Data files (small size, core data should store in Google Drive)
-	│   ├── figures/       					 # Figure files
-	│   └── models/        					 # Model files
-	├── tests/             					 # Test files
-	├── doc/               					 # Project documentation
-	├── .gitignore         					 # Git ignore file
-	├── README.md          					 # Project introduction
-	├── pyproject.toml     					 # Poetry file to control dependencies
-	├── poetry.lock        					 # Poetry file
-	└── CONTRIBUTING.md    					 # Contribution guidelines
-	```
+```
+ErdosNewsFinanceProject/
+├── config/            					 # Experiment setup by TOML files
+├── src/               					 # Source code files
+│   ├── engine/             				 # Code files for each feature
+│   │   ├── ingestion/     				 # Data ingestion
+│   │   ├── clean/         				 # Data preprocessing
+│   │   ├── model_fin/     				 # Model scripts for finance data
+│   │   ├── model_news/    				 # Model scripts for news data
+│   │   ├── model_prediction/  			 # Model scripts for prediction
+│   │   └── model_eval/    				 # Model evaluation
+│   ├── utils/         					 # Utility functions (reusable functions in all other folders)
+│   └── predict_stock_w_news.py 		 # The main file to call all drivers (steps) in enginie related to predicting stock price with news topics
+├── scripts/           					 # Shell scripts to run engine driver
+├── notebook/          					 # Jupyter notebook for visualization or small experiments
+├── data/              					 # Data files (small size, core data should store in Google Drive)
+│   ├── figures/       					 # Figure files
+│   └── models/        					 # Model files
+├── tests/             					 # Test files
+├── doc/               					 # Project documentation
+├── .gitignore         					 # Git ignore file
+├── README.md          					 # Project introduction
+├── pyproject.toml     					 # Poetry file to control dependencies
+├── poetry.lock        					 # Poetry file
+└── CONTRIBUTING.md    					 # Contribution guidelines
+```
 
-	This structure helps in maintaining a clean and organized codebase, making it easier to navigate and contribute to the project.
+This structure helps in maintaining a clean and organized codebase, making it easier to navigate and contribute to the project.
 
 # Configure the Experiment and Run Scripts
 
 **Run Python scripts**
+```bash
+# method 1. run <file>.py script with poetry
+poetry run python <file>.py
 
-	```bash
-	# method 1. run <file>.py script with poetry
-	poetry run python <file>.py
+# method 2. open poetry shell
+poetry shell
+## then open python at the shell
+python
+## or run python scripts
+python <file>.py
+```
 
-	# method 2. open poetry shell
-	poetry shell
-	## then open python at the shell
-	python
-	## or run python scripts
-	python <file>.py
-	```
-
-	If you want to run Python code in the Jupyter Notebook, you will need to choose the kernel as the poetry environment for the current project first. For example, in VS Code, after opening the Jupyter Notebook, you will find the button "Select Kernel" on the top right to choose the kernel.
+If you want to run Python code in the Jupyter Notebook, you will need to choose the kernel as the poetry environment for the current project first. For example, in VS Code, after opening the Jupyter Notebook, you will find the button "Select Kernel" on the top right to choose the kernel.
 
 # Style Guide
