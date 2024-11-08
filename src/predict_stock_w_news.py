@@ -13,11 +13,11 @@ import errno
 import datetime
 
 from utils.config_tool import parse_config, save_config_copy
-from utils.directory_tool import ensure_dir
+from utils.directory_tool import ensure_dir, get_directory_names
 from utils.logging_tool import initialize_logger
-from utils.startup import get_directory_names
 
 from engine.ingestion.ingest_stock_driver import ingest_stock
+from engine.clean.clean_stock_driver import get_return
 
 
 ############################################
@@ -35,17 +35,12 @@ def main(opt_params):
 
 		# Optional parameters
 		config_filename = opt_params.config_filename
+		dir_project = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-		dir_current_script = os.path.dirname(os.path.abspath(__file__))
-		dir_data = os.path.abspath(os.path.join(dir_current_script, "..", "data/searching"))
 
-		# Get the directory names
-		dirs = get_directory_names(path_core_data = dir_data)
-		if not dir_data:
-			dir_data = dirs["data/searching"]
-		
+		# Configuration
 		# Import the configuration file
-		config_file = os.path.join(dirs["config"], config_filename)
+		config_file = os.path.join(dir_project, config_filename)
 		if os.path.exists(config_file):
 			config = parse_config(config_file)
 		else:
@@ -53,40 +48,104 @@ def main(opt_params):
 			raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), config_file)
 		
 		# Add today to the configuration
-		config["date"]['today'] = datetime.datetime.now().strftime('%Y-%m-%d')
+		config['date']['today'] = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 
+
+		# Data directories
+		# Forming data directories in the local data path
+		dirs = get_directory_names(
+			path_core_data = config["info"]["local_data_path"],
+			dirs_names = config["info"]["dirs_names"]
+		)
+
+
+		# Save the config as a copy
+		ensure_dir(dirs["config_archive"])
+		save_config_copy(
+			config_path = dirs["config_archive"],
+			config = config,
+			file_name = "predict_stock_w_news_copy_.toml"
+		)
+
+
+		# Logging
 		# Initialize the logger
+		ensure_dir(dirs["logs"])
 		log_file = "{}_log_{}.txt".format(
 			os.path.splitext(os.path.basename(config_filename))[0],
 			config["date"]['today'])
-		logger = logging.getLogger(__name__)
-
-
-		# Forming data directories
-		path_core_data = config["info"]["gdrive_path"]
-
-		dirs = get_directory_names(
-			dirs_dict = dirs,
-			dirs_names = config["info"]["dirs_names"],
-			path_core_data = path_core_data,
-			separater_key = ""
+		logger = initialize_logger(
+			log_path = dirs["logs"],
+			log_file = log_file
 		)
 
-		# Save the config as a copy
-		save_config_copy(config_file, dir_data, config["date"]["today"])
+
 
 
 		############################################
 		# Starting pipeline
 
+		# For finance data
 		# Ingest stock data
-		if config['pipeline']['stock_ingestion']:
-			logger.info('Start ingesting stock data...')
-			ensure_dir(dirs["stock_ingestion"])
+		if config['pipeline']['fin_ingestion']:
+			logger.info('==> Start ingesting finance data...')
+			ensure_dir(dirs["data_raw"])
+			ingest_stock(config, logger)
+			logger.info('Finance data ingestion completed.')
 
-			ingest_stock(args.config)
+		# stock preprocessing
+		if config['pipeline']['fin_processing']:
+			logger.info('==> Start processing finance data...')
+			ensure_dir(dirs["data_clean"])
+			get_return(config, logger)
+			logger.info('Finance data processing completed.')
 
-			logger.info('Stock data ingestion completed.')
+		# finance model
+		if config['pipeline']['fin_model']:
+			logger.info('Start modeling on finance data...')
+			ensure_dir(dirs["model_fin"])
+			# --> to add a function here
+			logger.info('Finance modeling completed.')
+		
+
+		# For news data
+		# news ingestion
+		if config['pipeline']['news_ingestion']:
+			logger.info('==> Start ingesting News data...')
+			ensure_dir(dirs["data_raw"])
+			# --> to add a function here
+			logger.info('News data ingestion completed.')
+		
+		# news preprocessing
+		if config['pipeline']['news_processing']:
+			logger.info('==> Start processing News data...')
+			ensure_dir(dirs["data_clean"])
+			# --> to add a function here
+			logger.info('News data processing completed.')
+		
+		# news model
+		if config['pipeline']['news_model']:
+			logger.info('==> Start modeling on News data...')
+			ensure_dir(dirs["model_news"])
+			# --> to add a function here
+			logger.info('News modeling completed.')
+
+
+		# For predictive model
+		# prediction
+		if config['pipeline']['predict_model']:
+			logger.info('==> Start training the predictive model...')
+			ensure_dir(dirs["model_pre_train"])
+			# --> to add a function here
+			logger.info('Predictive model training completed.')
+
+		# evaluation
+		if config['pipeline']['predict_evaluation']:
+			logger.info('==> Start evaluating the predictive model...')
+			ensure_dir(dirs["model_pre_eval"])
+			# --> to add a function here
+			logger.info('Predictive model evaluation completed.')
+
 
 
 ############################################
