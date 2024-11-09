@@ -10,14 +10,14 @@ Thank you for considering contributing to the Erdos News Finance Project! We wel
 ## Setup
 Here are some guidelines to help you get started:
 
-1. **Python Version**: Make sure to use 3.13.0 under the project path.
+1. **Python Version**: Make sure to use 3.12.0 under the project path.
 	```bash
 	# change the directory to your project path in the terminal
 	# if you have multiple versions of python installed and the default one is not 3.13.0, you will need to specify it
-	poetry env use <path>/python3.13
+	poetry env use <path>/python3.12
 	# check the python version
 	python --version
-	# should be Python 3.13.0
+	# should be Python 3.12.0
 	```
 
 2. **Install Poetry**: We use [Poetry](https://python-poetry.org/) for dependency (python package version) management.
