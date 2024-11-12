@@ -18,7 +18,8 @@ from utils.logging_tool import initialize_logger
 
 from engine.ingestion.ingest_stock_driver import ingest_stock
 from engine.clean.clean_stock_driver import get_return
-
+from engine.ingestion import ingest_All_news as ia
+from engine.clean.clean_All_news import preprocess_all_news_main
 
 ############################################
 def main(opt_params):
@@ -114,6 +115,14 @@ def main(opt_params):
 			logger.info('==> Start ingesting News data...')
 			ensure_dir(dirs["data_raw"])
 			# --> to add a function here
+
+			############################################
+			ia.ingest_example(config, logger)
+			ia.ingest_k_example(config, logger)
+			ia.ingest_EDA(config, logger)
+			ia.ingest_politics(config, logger)
+            ############################################
+
 			logger.info('News data ingestion completed.')
 		
 		# news preprocessing
@@ -121,6 +130,11 @@ def main(opt_params):
 			logger.info('==> Start processing News data...')
 			ensure_dir(dirs["data_clean"])
 			# --> to add a function here
+            ############################################
+			preprocess_all_news_main(config, logger)
+
+			############################################
+
 			logger.info('News data processing completed.')
 		
 		# news model
