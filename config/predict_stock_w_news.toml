@@ -4,10 +4,10 @@
 [pipeline]
 # finance
 fin_ingestion = false
-fin_processing = true
+fin_processing = false
 fin_model = false
 # news
-news_ingestion = false
+news_ingestion = true
 news_processing = false
 news_model = false
 # prediction
@@ -20,7 +20,7 @@ predict_evaluation = false
 ############################################
 [info]
 # local path to store all data (change to your local path)
-local_data_path = "/Users/xwpeng/Projects/Erdos_NewsFin/data"
+local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
 
 # directories names for data files in the Google Drive
 # data_raw: raw stock and news data
@@ -67,10 +67,28 @@ stock_data_cleaned_file = "stock_return.csv"
 
 
 [news_ingestion]
+[news_ingestion.input]
+all_news_file = "all-the-news-2-1.csv"
+news_head_line = "News_Category_Dataset_v3.json"
+all_news_eg1_file = "Example_All_news.csv"
+all_news_egk_file = "kExample_All_news.csv"
+eda_all_news_file = "EDA_All_news.csv"
+all_news_politic_file = "All_news_politics.csv"
+
+# Global parameters for All_news set
+columns_to_drop = ['Unnamed: 0', 'author', 'year', 'month', 'day', 'url']
+publisher = ["Axios", "Business Insider", "Buzzfeed News", "CNBC", "CNN", "Economist","Fox News", "Gizmodo", "Hyperallergic", "Mashable", "New Republic", "New Yorker", "People", "Politico", "Refinery 29", "Reuters", "TMZ", "TechCrunch", "The Hill", "The New York Times", "The Verge", "Vice", "Vice News", "Vox", "Washington Post", "Wired"]    
+subsets_dropna = ['article']
+num_words = 100
+k = 50
 
 
 [news_preprocessing]
-
+[news_preprocessing.output]
+all_news_cleaned_file = "Preprocessed_All_news.csv"
+all_news_politic_cleaned_file = "Preprocessed_All_news_politics.csv"
+all_news_eg1_cleaned_file = "Preprocessed_Example_All_news.csv"
+news_head_line_cleaned = "Preprocessed_Headline.csv"
 
 [news_model]
 
