@@ -119,7 +119,7 @@ def main(opt_params):
 			############################################
 			ia.ingest_example(config, logger)
 			ia.ingest_k_example(config, logger)
-			ia.ingest_EDA(config, logger)
+			#ia.ingest_EDA(config, logger)
 			ia.ingest_politics(config, logger)
             ############################################
 
