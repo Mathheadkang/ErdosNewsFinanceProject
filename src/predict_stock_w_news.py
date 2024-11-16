@@ -21,8 +21,8 @@ from engine.clean.clean_stock_driver import get_return, combine_stock_factors
 from engine.model_fin.fin_model_driver import factor_model
 
 # modules for news data
-# from engine.ingestion import ingest_All_news as ia
-# from engine.clean.clean_All_news import preprocess_all_news_main
+from engine.ingestion import ingest_All_news as ia
+from engine.clean.clean_All_news import preprocess_all_news_main
 
 # modules for predictive model
 
@@ -121,36 +121,20 @@ def main(opt_params):
 		if config['pipeline']['news_ingestion']:
 			logger.info('==> Start ingesting News data...')
 			ensure_dir(dirs["data_raw"])
-			# --> to add a function here
-
-			############################################
-<<<<<<< HEAD
 			ia.ingest_example(config, logger)
 			ia.ingest_k_example(config, logger)
-			#ia.ingest_EDA(config, logger)
-			ia.ingest_politics(config, logger)
-=======
-			# ia.ingest_example(config, logger)
-			# ia.ingest_k_example(config, logger)
 			# ia.ingest_EDA(config, logger)
-			# ia.ingest_politics(config, logger)
->>>>>>> ae28b6b (ingest factors data and combine with stock data)
-            ############################################
-
+			ia.ingest_politics(config, logger)
 			logger.info('News data ingestion completed.')
 		
 		# news preprocessing
 		if config['pipeline']['news_processing']:
 			logger.info('==> Start processing News data...')
 			ensure_dir(dirs["data_clean"])
-			# --> to add a function here
-            ############################################
-			# preprocess_all_news_main(config, logger)
-
-			############################################
-
+			preprocess_all_news_main(config, logger)
 			logger.info('News data processing completed.')
 		
+
 		# news model
 		if config['pipeline']['news_model']:
 			logger.info('==> Start modeling on News data...')
@@ -166,6 +150,7 @@ def main(opt_params):
 			ensure_dir(dirs["model_pre_train"])
 			# --> to add a function here
 			logger.info('Predictive model training completed.')
+
 
 		# evaluation
 		if config['pipeline']['predict_evaluation']:
