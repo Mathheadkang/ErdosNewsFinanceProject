@@ -32,17 +32,6 @@ import spacy
 import time
 
 
-# Load the spaCy model
-# check if the model is installed, if not install it in python
-if not spacy.util.is_package("en_core_web_sm"):
-    spacy.cli.download("en_core_web_sm")
-
-nlp = spacy.load('en_core_web_sm')
-
-# Load the stopwords
-stop_words = set(stopwords.words('english'))
-
-
 #######################################################
 # Drop columns
 
@@ -99,6 +88,13 @@ def get_tokenized_words_with_no_punctuation(text):
 #######################################################
 # Stop words removal
 def remove_stop_words(words):
+    # Load the stopwords
+    # check if the stopwords are installed, if not install it in python
+    if not nltk.data.find('corpora/stopwords'):
+        nltk.download('stopwords')
+
+    stop_words = set(stopwords.words('english'))
+
     words_no_stop_words = [word for word in words if word not in stop_words]
     return words_no_stop_words
 
@@ -114,6 +110,13 @@ def lemmatize_words(words):
 #######################################################
 # Named entity recognition
 def extract_ner_features(text):
+    # Load the spaCy model
+    # check if the model is installed, if not install it in python
+    if not spacy.util.is_package("en_core_web_sm"):
+        spacy.cli.download("en_core_web_sm")
+
+    nlp = spacy.load('en_core_web_sm')
+
     doc = nlp(text)
     entity_counts = {
         "PERSON": 0,
