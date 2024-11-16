@@ -1,3 +1,7 @@
 
+<<<<<<< HEAD
 # ingore all pyc files
+=======
+# skip all pyc files
+>>>>>>> ad3be3f (git ignore .pyc files)
 *.pyc
