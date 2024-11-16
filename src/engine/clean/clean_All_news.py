@@ -33,6 +33,10 @@ import time
 
 
 # Load the spaCy model
+# check if the model is installed, if not install it in python
+if not spacy.util.is_package("en_core_web_sm"):
+    spacy.cli.download("en_core_web_sm")
+
 nlp = spacy.load('en_core_web_sm')
 
 # Load the stopwords

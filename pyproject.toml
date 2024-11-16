@@ -18,6 +18,8 @@ nltk = "^3.9.1"
 matlib = "^0.1.2"
 numpy = "2.0.0"
 spacy = "^3.8.2"
+pandas-datareader = "^0.10.0"
+scikit-learn = "^1.5.2"
 
 
 [build-system]
