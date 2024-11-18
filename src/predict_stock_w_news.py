@@ -96,7 +96,7 @@ def main(opt_params):
 		if config['pipeline']['fin_ingestion']:
 			logger.info('==> Start ingesting finance data...')
 			ensure_dir(dirs["data_raw"])
-			# ingest_stock(config, logger)
+			ingest_stock(config, logger)
 			ingest_factors(config, logger)
 			logger.info('Finance data ingestion completed.')
 
@@ -134,7 +134,7 @@ def main(opt_params):
 			preprocess_all_news_main(config, logger)
 			logger.info('News data processing completed.')
 		
-
+		
 		# news model
 		if config['pipeline']['news_model']:
 			logger.info('==> Start modeling on News data...')
