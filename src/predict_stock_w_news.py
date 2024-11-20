@@ -110,7 +110,7 @@ def main(opt_params):
 
 		# finance model
 		if config['pipeline']['fin_model']:
-			logger.info('Start modeling on finance data...')
+			logger.info('==> Start modeling on finance data...')
 			ensure_dir(dirs["model_fin"])
 			factor_model(config, logger)
 			logger.info('Finance modeling completed.')

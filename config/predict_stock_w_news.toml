@@ -39,9 +39,9 @@ start_date = "2016-01-01"
 # date before start_data_validation is used for training
 start_date_validation = "2019-01-01"
 # date after start_data_test is used for testing
-start_date_test = "2020-01-01"
+start_date_test = "2019-07-01"
 
-end_date = "2020-12-31"
+end_date = "2019-12-31"
 
 
 
