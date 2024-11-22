@@ -7,7 +7,6 @@ Should use config/predict_stock_w_news.toml to configure the parameters.
 """
 
 import os
-import logging
 import argparse
 import errno
 import datetime
@@ -16,10 +15,16 @@ from utils.config_tool import parse_config, save_config_copy
 from utils.directory_tool import ensure_dir, get_directory_names
 from utils.logging_tool import initialize_logger
 
-from engine.ingestion.ingest_stock_driver import ingest_stock
-from engine.clean.clean_stock_driver import get_return
+# modules for finance data
+from engine.ingestion.ingest_fin_driver import ingest_stock, ingest_factors
+from engine.clean.clean_stock_driver import get_return, combine_stock_factors
+from engine.model_fin.fin_model_driver import factor_model
+
+# modules for news data
 from engine.ingestion import ingest_All_news as ia
 from engine.clean.clean_All_news import preprocess_all_news_main
+
+# modules for predictive model
 
 ############################################
 def main(opt_params):
@@ -87,25 +92,27 @@ def main(opt_params):
 		# Starting pipeline
 
 		# For finance data
-		# Ingest stock data
+		# Ingest finance data
 		if config['pipeline']['fin_ingestion']:
 			logger.info('==> Start ingesting finance data...')
 			ensure_dir(dirs["data_raw"])
 			ingest_stock(config, logger)
+			ingest_factors(config, logger)
 			logger.info('Finance data ingestion completed.')
 
-		# stock preprocessing
+		# finance preprocessing
 		if config['pipeline']['fin_processing']:
 			logger.info('==> Start processing finance data...')
 			ensure_dir(dirs["data_clean"])
 			get_return(config, logger)
+			combine_stock_factors(config, logger)
 			logger.info('Finance data processing completed.')
 
 		# finance model
 		if config['pipeline']['fin_model']:
-			logger.info('Start modeling on finance data...')
+			logger.info('==> Start modeling on finance data...')
 			ensure_dir(dirs["model_fin"])
-			# --> to add a function here
+			factor_model(config, logger)
 			logger.info('Finance modeling completed.')
 		
 
@@ -114,28 +121,19 @@ def main(opt_params):
 		if config['pipeline']['news_ingestion']:
 			logger.info('==> Start ingesting News data...')
 			ensure_dir(dirs["data_raw"])
-			# --> to add a function here
-
-			############################################
 			ia.ingest_example(config, logger)
 			ia.ingest_k_example(config, logger)
-			#ia.ingest_EDA(config, logger)
+			# ia.ingest_EDA(config, logger)
 			ia.ingest_politics(config, logger)
-            ############################################
-
 			logger.info('News data ingestion completed.')
 		
 		# news preprocessing
 		if config['pipeline']['news_processing']:
 			logger.info('==> Start processing News data...')
 			ensure_dir(dirs["data_clean"])
-			# --> to add a function here
-            ############################################
 			preprocess_all_news_main(config, logger)
-
-			############################################
-
 			logger.info('News data processing completed.')
+		
 		
 		# news model
 		if config['pipeline']['news_model']:
@@ -152,6 +150,7 @@ def main(opt_params):
 			ensure_dir(dirs["model_pre_train"])
 			# --> to add a function here
 			logger.info('Predictive model training completed.')
+
 
 		# evaluation
 		if config['pipeline']['predict_evaluation']:

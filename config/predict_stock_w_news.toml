@@ -5,9 +5,9 @@
 # finance
 fin_ingestion = false
 fin_processing = false
-fin_model = false
+fin_model = true
 # news
-news_ingestion = true
+news_ingestion = false
 news_processing = false
 news_model = false
 # prediction
@@ -15,12 +15,11 @@ predict_model = false
 predict_evaluation = false
 
 
-
-
 ############################################
 [info]
 # local path to store all data (change to your local path)
-local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
+# local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
+local_data_path = "/Users/xwpeng/Projects/Erdos_NewsFin/data"
 
 # directories names for data files in the Google Drive
 # data_raw: raw stock and news data
@@ -31,19 +30,18 @@ local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Er
 # model_pre_eval: evaluation results for the predictive models
 dirs_names = ["logs", "config_archive", "data_raw", "data_clean", "model_fin", "model_news", "model_pre_train", "model_pre_eval"]
 
-# training period
-train_start_date = "2016-01-01"
-train_end_date = "2019-12-31"
 
-# testing period
-test_start_date = "2020-01-01"
-test_end_date = "2020-12-31"
+############################################
+[data]
 
-# should we do cross-validation on the training data?
-# note: cv for time series data is based on rolling windows, not random splits
-#       so it should fit finance model, news model, and predictive model simultaneously
-cross_validation = false
+start_date = "2016-01-01"
 
+# date before start_data_validation is used for training
+start_date_validation = "2019-01-01"
+# date after start_data_test is used for testing
+start_date_test = "2019-07-01"
+
+end_date = "2019-12-31"
 
 
 
@@ -52,18 +50,26 @@ cross_validation = false
 [fin_ingestion]
 [fin_ingestion.input]
 stock_symbol_file = "stock_symbols.csv"
-start_date = "2016-01-01"
-end_date = "2020-12-31"
+factor_file = "F-F_Research_Data_5_Factors_2x3_daily"
 [fin_ingestion.output]
 stock_data_file = "stock_data.csv"
+factor_data_file = "ff_5factors_data.csv"
+
 
 [fin_preprocessing]
 [fin_preprocessing.input]
 stock_data_file = "stock_data.csv"
+factor_data_file = "ff_5factors_data.csv"
 [fin_preprocessing.output]
 stock_data_cleaned_file = "stock_return.csv"
+stock_factor_data_file = "stock_factors_data.csv"
+
 
 [fin_model]
+[fin_model.input]
+stock_factor_data = "stock_factors_data.csv"
+[fin_model.output]
+abnormal_return_file = "abnormal_return.csv"
 
 
 [news_ingestion]

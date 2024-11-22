@@ -2,6 +2,8 @@ from yahoo_fin import stock_info as si
 import pandas as pd
 import os
 
+import pandas_datareader.data as pdr
+
 def ingest_stock(config, logger):
 		"""
 		This function is used to ingest stock data from Yahoo Finance.
@@ -28,8 +30,8 @@ def ingest_stock(config, logger):
 		for ticker in ticker_list:
 				historical_datas[ticker] = si.get_data(
 					ticker = ticker,
-					start_date = config["fin_ingestion"]["input"]["start_date"],
-					end_date = config["fin_ingestion"]["input"]["end_date"],
+					start_date = config["data"]["start_date"],
+					end_date = config["data"]["end_date"],
 					interval = "1d")
 		logger.info("Download completed.")
 
@@ -42,3 +44,31 @@ def ingest_stock(config, logger):
 				config["fin_ingestion"]["output"]["stock_data_file"]
 			)
 		)
+
+
+def ingest_factors(config, logger):
+	"""
+	This function is used to ingest Fama French factors from Ken French's website.
+	"""
+
+	# download the Fama French factors
+	logger.info("Downloading Fama French factors...")
+	factor_file = config["fin_ingestion"]["input"]["factor_file"]
+	df_factors = pdr.DataReader(
+		factor_file, 
+		'famafrench', 
+		start = config["data"]["start_date"],
+		end = config["data"]["end_date"])[0]
+	df_factors.rename(columns={'Mkt-RF': 'MKT'}, inplace=True)
+
+	# log the download completion and count the number of rows
+	logger.info(f"Fama-French data download completed. (from {df_factors.index[0]} to {df_factors.index[-1]}, range: {len(df_factors)} trading days)")
+
+	# save the Fama French factors to the local file
+	df_factors.to_csv(
+		os.path.join(
+			config["info"]["local_data_path"],
+			"data_raw",
+			config["fin_ingestion"]["output"]["factor_data_file"]
+		)
+	)
