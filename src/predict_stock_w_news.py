@@ -23,6 +23,7 @@ from engine.model_fin.fin_model_driver import factor_model
 # modules for news data
 from engine.ingestion import ingest_All_news as ia
 from engine.clean.clean_All_news import preprocess_all_news_main
+from engine.model_news.news_model_driver import topic_model_driver
 
 # modules for predictive model
 
@@ -140,6 +141,7 @@ def main(opt_params):
 			logger.info('==> Start modeling on News data...')
 			ensure_dir(dirs["model_news"])
 			# --> to add a function here
+			topic_model_driver(config, logger)
 			logger.info('News modeling completed.')
 
 
