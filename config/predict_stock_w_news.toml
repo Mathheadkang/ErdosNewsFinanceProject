@@ -18,8 +18,8 @@ predict_evaluation = false
 ############################################
 [info]
 # local path to store all data (change to your local path)
-# local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
-local_data_path = "/Users/xwpeng/Projects/Erdos_NewsFin/data"
+local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
+#local_data_path = "/Users/xwpeng/Projects/Erdos_NewsFin/data"
 
 # directories names for data files in the Google Drive
 # data_raw: raw stock and news data
@@ -97,6 +97,11 @@ all_news_eg1_cleaned_file = "Preprocessed_Example_All_news.csv"
 news_head_line_cleaned = "Preprocessed_Headline.csv"
 
 [news_model]
+[news_model.input]
+tfidf_headline = "tfidf_headline.joblib"
+tfidf_nmf_headline = "tfidf_nmf_headline.joblib"
+word2vec_headline = "word2vec_headline.joblib"
+classification_headlines = "classification_headline.joblib"
 
 
 [predict_model]
