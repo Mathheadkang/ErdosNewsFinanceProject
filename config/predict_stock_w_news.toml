@@ -100,6 +100,7 @@ news_head_line_cleaned = "Preprocessed_Headline.csv"
 [news_model.input]
 tfidf_headline = "tfidf_headline.joblib"
 tfidf_nmf_headline = "tfidf_nmf_headline.joblib"
+tfidf_nmf_matrix = "tfidf_nmf_matrix.joblib"
 word2vec_headline = "word2vec_headline.joblib"
 classification_headlines = "classification_headline.joblib"
 
