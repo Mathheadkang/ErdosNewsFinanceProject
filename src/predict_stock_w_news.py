@@ -24,6 +24,7 @@ from engine.model_fin.fin_model_driver import factor_model
 from engine.ingestion import ingest_All_news as ia
 from engine.clean.clean_All_news import preprocess_all_news_main
 from engine.model_news.news_model_classify import predict_the_all_news
+from engine.model_news.news_model_driver import topic_model_driver
 
 # modules for predictive model
 
@@ -140,6 +141,7 @@ def main(opt_params):
 			logger.info('==> Start modeling on News data...')
 			ensure_dir(dirs["model_news"])
 			predict_the_all_news(config, logger)
+			topic_model_driver(config, logger)
 			logger.info('News modeling completed.')
 
 
