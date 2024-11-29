@@ -140,7 +140,7 @@ def main(opt_params):
 		if config['pipeline']['news_model']:
 			logger.info('==> Start modeling on News data...')
 			ensure_dir(dirs["model_news"])
-			predict_the_all_news(config, logger)
+			# predict_the_all_news(config, logger)
 			topic_model_driver(config, logger)
 			logger.info('News modeling completed.')
 
