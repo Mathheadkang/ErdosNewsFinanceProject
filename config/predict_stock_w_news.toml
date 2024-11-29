@@ -10,7 +10,7 @@ fin_model = false
 # news
 news_ingestion = false
 news_processing = false
-news_model = true
+news_model = false
 
 # prediction
 predict_model = false
@@ -20,8 +20,8 @@ predict_evaluation = false
 ############################################
 [info]
 # local path to store all data (change to your local path)
-local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
-#local_data_path = "/Users/xwpeng/Projects/Erdos_NewsFin/data"
+# local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
+local_data_path = "/Users/xwpeng/Projects/Erdos_NewsFin/data"
 
 # directories names for data files in the Google Drive
 # data_raw: raw stock and news data
