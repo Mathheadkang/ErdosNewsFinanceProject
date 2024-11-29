@@ -6,12 +6,12 @@
 fin_ingestion = false
 fin_processing = false
 fin_model = false
-fin_model = false
+
 # news
 news_ingestion = false
 news_processing = false
 news_model = true
-news_model = true
+
 # prediction
 predict_model = false
 predict_evaluation = false
@@ -114,7 +114,7 @@ dict_keep_n = 1000
 method = "LDA" # "LDA" or "HDP"
 lda_num_cores = 5
 lda_topics = 100
-[news_model.input]
+
 news_data_file = "Preprocessed_All_news_politics.csv"
 [news_model.output]
 model_file = "news_politics_topic_model"
