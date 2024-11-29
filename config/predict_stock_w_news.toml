@@ -41,7 +41,7 @@ start_date = "2016-01-01"
 # date before start_data_validation is used for training
 start_date_validation = "2019-01-01"
 # date after start_data_test is used for testing
-start_date_test = "2019-07-01"
+# start_date_test = "2019-07-01"
 
 end_date = "2019-12-31"
 
@@ -101,6 +101,14 @@ all_news_predicted_eg1_file = "Predicted_Example_All_news.csv"
 news_head_line_cleaned = "Preprocessed_Headline.csv"
 
 [news_model]
+dict_no_below = 10
+dict_no_above = 0.5
+dict_keep_n = 5000
+method = "HDP" # "LDA" or "HDP"
+# lda_num_cores = 5
+topics = 150
+topn = 100 # number of top words to show for each topic
+
 [news_model.input]
 tfidf_headline = "tfidf_headline.joblib"
 tfidf_nmf_headline = "tfidf_nmf_headline.joblib"
@@ -108,18 +116,13 @@ tfidf_nmf_matrix = "tfidf_nmf_matrix.joblib"
 headline_sampled = "headline_sampled.csv"
 word2vec_headline = "word2vec_headline.joblib"
 classification_headlines = "classification_headline.joblib"
-dict_no_below = 5
-dict_no_above = 0.5
-dict_keep_n = 1000
-method = "LDA" # "LDA" or "HDP"
-lda_num_cores = 5
-lda_topics = 100
 
-news_data_file = "Preprocessed_All_news_politics.csv"
+news_data_file = ["2016.csv", "2017.csv", "2018.csv", "2019.csv"]#"Preprocessed_All_news_politics.csv"
+
 [news_model.output]
-model_file = "news_politics_topic_model"
-topic_file = "news_politics_topics.csv"
-news_topic_file = "news_politics_data_w_topic.csv"
+model_file = "news_topic_model"
+topic_file = "news_topics.csv"
+news_topic_file = "news_w_topic.csv"
 
 
 [predict_model]
