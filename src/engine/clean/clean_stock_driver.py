@@ -48,14 +48,14 @@ def combine_stock_factors(config, logger):
 		os.path.join(
 			config['info']['local_data_path'],
 			"data_clean",
-			config['fin_model']['input']['stock_data']
+			config['fin_preprocessing']['output']['stock_data_cleaned_file']
 		)
 	)
 	factors = pd.read_csv(
 		os.path.join(
 			config['info']['local_data_path'],
 			"data_raw",
-			config['fin_model']['input']['factor_data']
+			config['fin_preprocessing']['input']['factor_data_file']
 		)
 	)
 	stock['date'] = pd.to_datetime(stock['date'])
