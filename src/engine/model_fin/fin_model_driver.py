@@ -37,6 +37,7 @@ def factor_model(config, logger):
 	X_variable = ["MKT", "SMB", "HML", "RMW", "CMA"]
 	# scale the factors by dividing 100
 	data_train[X_variable] = data_train[X_variable] / 100
+	data_val[X_variable] = data_val[X_variable] / 100
 	fitted_models = {}
 	for ticker in tickers:
 		# fit a factor model
