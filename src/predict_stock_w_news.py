@@ -25,6 +25,8 @@ from engine.ingestion import ingest_All_news as ia
 from engine.clean.clean_All_news import preprocess_all_news_main
 from engine.model_news.news_model_classify import predict_the_all_news
 from engine.model_news.news_model_driver import topic_model_driver
+from engine.model_predict.Fin_prediction import predicting_price
+from engine.model_eval.prediction_eval import evaluation
 
 # modules for predictive model
 
@@ -150,7 +152,7 @@ def main(opt_params):
 		if config['pipeline']['predict_model']:
 			logger.info('==> Start training the predictive model...')
 			ensure_dir(dirs["model_pre_train"])
-			# --> to add a function here
+			predicting_price(config, logger)
 			logger.info('Predictive model training completed.')
 
 
@@ -158,7 +160,7 @@ def main(opt_params):
 		if config['pipeline']['predict_evaluation']:
 			logger.info('==> Start evaluating the predictive model...')
 			ensure_dir(dirs["model_pre_eval"])
-			# --> to add a function here
+			evaluation(config, logger)
 			logger.info('Predictive model evaluation completed.')
 
 

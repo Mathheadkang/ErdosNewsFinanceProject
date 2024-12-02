@@ -3,25 +3,25 @@
 # set true to run the pipeline, false to skip the pipeline
 [pipeline]
 # finance
-fin_ingestion = false
-fin_processing = false
-fin_model = false
+fin_ingestion = true
+fin_processing = true
+fin_model = true
 
 # news
 news_ingestion = false
 news_processing = false
-news_model = true
+news_model = false
 
 # prediction
 predict_model = false
-predict_evaluation = false
+predict_evaluation = true
 
 
 ############################################
 [info]
 # local path to store all data (change to your local path)
-# local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
-local_data_path = "/Users/xwpeng/Projects/Erdos_NewsFin/data"
+local_data_path = "/Users/xiaokangwang/Documents/PycharmProjects/Projects for Erdos 2024 fall/data_set"
+#local_data_path = "/Users/xwpeng/Projects/Erdos_NewsFin/data"
 
 # directories names for data files in the Google Drive
 # data_raw: raw stock and news data
@@ -125,10 +125,24 @@ news_data_file = ["2016.csv", "2017.csv", "2018.csv", "2019.csv"]#"Preprocessed_
 [news_model.output]
 model_file = "news_topic_model"
 topic_file = "news_topics.csv"
-news_topic_file = "news_w_topic.csv"
+news_topic_file = "HDP_500_news_w_topic.csv"
 
 
 [predict_model]
+# Set the ticker you want to predict
+ticker = 'XOM'
+# Threshold for throwing away the low frequency news
+topic_threshold = 10
+
+# The merged data
+merged_data = "merged_stock_news.csv"
+
+#XGBoost parameters
+n_estimators = 500
+max_depth = 60
+reg_lambda = 0.09
+
+predict_price = "stock_price_predicted.csv"
 
 
 [predict_evaluation]
