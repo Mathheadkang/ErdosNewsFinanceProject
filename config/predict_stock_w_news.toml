@@ -10,7 +10,7 @@ fin_model = false
 # news
 news_ingestion = false
 news_processing = false
-news_model = false
+news_model = true
 
 # prediction
 predict_model = false
@@ -103,11 +103,14 @@ news_head_line_cleaned = "Preprocessed_Headline.csv"
 [news_model]
 dict_no_below = 10
 dict_no_above = 0.5
-dict_keep_n = 5000
+dict_keep_n = 10000
 method = "HDP" # "LDA" or "HDP"
 # lda_num_cores = 5
-topics = 150
+gamma = 200 # global clusters, bigger alpha, more clusters
+alpha = 0.8 # local clusters, bigger gamma, more clusters
+topics = 500
 topn = 100 # number of top words to show for each topic
+compute_coherence = false
 
 [news_model.input]
 tfidf_headline = "tfidf_headline.joblib"
