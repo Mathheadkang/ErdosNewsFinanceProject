@@ -56,60 +56,30 @@ def topic_model_driver(config, logger):
 		corpus_train = [dict.doc2bow(doc) for doc in data_train["token"]]
 
 		# Train the model
+		num_topics = config['news_model']['topics']
 		logger.info(f"Training the model with {config['news_model']['method']} method...")
 		if 'LDA' in config['news_model']['method']:
 			model = LdaMulticore(
 				corpus = corpus_train,
 				id2word = dict,
 				iterations = 100,
-				num_topics = config['news_model']['topics'],
+				num_topics = num_topics,
 				workers = config['news_model']['lda_num_cores'],
 				passes = 100
 			)
 		elif 'HDP' in config['news_model']['method']:
-			hdp_model = HdpModel(corpus = corpus_train, id2word = dict, T=config['news_model']['topics'])
+			hdp_model = HdpModel(
+				corpus = corpus_train,
+				id2word = dict,
+				T = num_topics,
+				alpha = config['news_model']['alpha'],
+				gamma = config['news_model']['gamma']
+			)
 			model = hdp_model.suggested_lda_model()
 		else:
 			raise ValueError("The method is not supported.")
 		logger.info(f"Model training is done.")
 
-		# Compute the coherence score of topics
-		logger.info(f"Computing the coherence score of topics...")
-		coherence_model = CoherenceModel(
-			model = model,
-			texts = data_train["token"],
-			corpus = corpus_train,
-			dictionary = dict,
-			coherence = 'c_v')
-		coherence_score = round(coherence_model.get_coherence(), 4)
-
-		num_topics = model.num_topics
-		logger.info(f"Coherence Score of {config['news_model']['method']} model with {num_topics} topics: {coherence_score}")
-		
-
-		# Predict the topics on all data
-		logger.info(f"Predicting the topics on all data (training and testing)...")
-		corpus = [dict.doc2bow(doc) for doc in data["token"]]
-		topics_inference = model.get_document_topics(corpus)
-		def sorted_topics(topics):
-			return sorted(topics, key=lambda x: x[1], reverse=True)
-		topics_inference_ = Parallel(n_jobs=-1)(delayed(sorted_topics)(topics) for topics in topics_inference)
-
-		data['key_topic'] = [topics[0][0] for topics in topics_inference_]
-		data['key_topic_wights'] = [topics[0][1] for topics in topics_inference_]
-		data['all_topics'] = topics_inference_
-		logger.info(f"Prediction is done.")
-
-		# Save the data
-		data_output = data[["date", "key_topic", 'key_topic_wights', 'all_topics']]
-		data_output.to_csv(
-			os.path.join(
-				config['info']['local_data_path'],
-				"model_news",
-				config['news_model']['method'] + "_" + str(num_topics) + "_" + config['news_model']['output']['news_topic_file']
-			),
-			index = False
-		)
 
 		# Save the model
 		model_path = os.path.join(
@@ -143,5 +113,45 @@ def topic_model_driver(config, logger):
 			index = False
 		)
 
+
+		# Compute the coherence score of topics
+		if config['news_model']['compute_coherence']:
+			logger.info(f"Computing the coherence score of topics...")
+			coherence_model = CoherenceModel(
+				model = model,
+				texts = data_train["token"],
+				corpus = corpus_train,
+				dictionary = dict,
+				coherence = 'c_v')
+			coherence_score = round(coherence_model.get_coherence(), 4)
+
+			logger.info(f"Coherence Score of {config['news_model']['method']} model with {num_topics} topics: {coherence_score}")
+		else:
+			logger.info(f"Coherence score is not computed.")
+		
+
+		# Predict the topics on all data
+		logger.info(f"Predicting the topics on all data (training and testing)...")
+		corpus = [dict.doc2bow(doc) for doc in data["token"]]
+		topics_inference = model.get_document_topics(corpus)
+		def sorted_topics(topics):
+			return sorted(topics, key=lambda x: x[1], reverse=True)
+		topics_inference_ = Parallel(n_jobs=-1)(delayed(sorted_topics)(topics) for topics in topics_inference)
+
+		data['key_topic'] = [topics[0][0] for topics in topics_inference_]
+		data['key_topic_wights'] = [topics[0][1] for topics in topics_inference_]
+		data['all_topics'] = topics_inference_
+		logger.info(f"Prediction is done.")
+
+		# Save the data
+		data_output = data[["date", "key_topic", 'key_topic_wights', 'all_topics']]
+		data_output.to_csv(
+			os.path.join(
+				config['info']['local_data_path'],
+				"model_news",
+				config['news_model']['method'] + "_" + str(num_topics) + "_" + config['news_model']['output']['news_topic_file']
+			),
+			index = False
+		)
 
 		return None
