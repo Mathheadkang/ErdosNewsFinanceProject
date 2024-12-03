@@ -1,5 +1,6 @@
 # News topics and future stock price movement
 
+![image](https://github.com/jamesdrsteele/ErdosNewsFinanceProject/blob/main/sddefault.jpg)
 
 # Team members:
 [Xiangwei Peng](https://github.com/xpeng-26)
@@ -69,6 +70,9 @@ The news model $f$ is obtained by the regression with the residual $r(t)-\hat{r}
 - XGBoost Regressor
 
 We chooose XGBoost with penalty among others for the least mean square error in the test set and contains more trading information. A detailed discussion can be found in [Price_predicting](Notebook/Price_predicting.ipynb).
+
+An example output:
+![image](https://github.com/jamesdrsteele/ErdosNewsFinanceProject/blob/main/output_XGB_XCOM.png)
 
 # Get started
 Go the the configuration file [predict_stock_w_news.toml](config/predict_stock_w_news.toml), change to your own local path of the dataset and check all the models you want to run. Then go the [predict_stock_w_news.py](src/predict_stock_w_news.py).
