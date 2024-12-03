@@ -18,7 +18,6 @@ There are two news dataset:
 
 The stock price dataset: [Yahoo API](https://developer.yahoo.com/api/), we use the history stock price of 20 companies from 2016-01-01 to 2019-12-31.
 
-# Environment
 
 # News model
 ## Preprocessing
