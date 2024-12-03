@@ -29,7 +29,7 @@ For both news dataset, we run the almost identical preprocessing pipeline:
 
 For the [All_news](https://components.one/datasets/all-the-news-2-news-articles-dataset) data set, we keep the 100 tokens as the headline.
 
-For the *Explainatory Data Analysis*, you can find in [EDA_headline](EDA_headline.ipynb), [EDA_Example_All_News](EDA_Example_All_News.ipynb), [All_News_EDA](All_News_EDA.ipynb).
+For the *Explainatory Data Analysis*, you can find in [EDA_headline](Notebook/EDA_headline.ipynb), [EDA_Example_All_News](Notebook/EDA_Example_All_News.ipynb), [All_News_EDA](Notebook/All_News_EDA.ipynb).
 
 ## Classification
 
@@ -39,7 +39,7 @@ Using [Headline](https://www.kaggle.com/datasets/rmisra/news-category-dataset) a
 - XGBoost Classifier
 - CNN
   
-This model, we choose the *Term frequency-Inverse document frequency (Tf-idf)* embedding to emphasize the importance of words in the headline. A more detailed discussion of the classification can be found in [Classification](Classification.ipynb).
+This model, we choose the *Term frequency-Inverse document frequency (Tf-idf)* embedding to emphasize the importance of words in the headline. A more detailed discussion of the classification can be found in [Classification](Notebook/Classification.ipynb).
 
 Using the classifer, we can label [All_news](https://components.one/datasets/all-the-news-2-news-articles-dataset).
 
@@ -48,7 +48,7 @@ By running the content of [All_news](https://components.one/datasets/all-the-new
 - Latent Dirichlet Allocation (LDA)
 - Hierarchical Dirichlet Process (HDP)
 
-We choose around 500 clusters. More exploration can be found in [explore_hdp](explore_hdp.ipynb). Later, we call these clusters as topics.
+We choose around 500 clusters. More exploration can be found in [explore_hdp](Notebook/explore_hdp.ipynb). Later, we call these clusters as topics.
 
 # Stock model
 
@@ -68,7 +68,7 @@ The news model $f$ is obtained by the regression with the residual $r(t)-\hat{r}
 - Random Forest Regressor
 - XGBoost Regressor
 
-We chooose XGBoost with penalty among others for the least mean square error in the test set and contains more trading information. A detailed discussion can be found in [Price_predicting](Price_predicting.ipynb).
+We chooose XGBoost with penalty among others for the least mean square error in the test set and contains more trading information. A detailed discussion can be found in [Price_predicting](Notebook/Price_predicting.ipynb).
 
 # Get started
-Go the the configuration file [predict_stock_w_news.toml](predict_stock_w_news.toml), change to your own local path of the dataset and check all the models you want to run. Then go the [predict_stock_w_news.py](predict_stock_w_news.py).
+Go the the configuration file [predict_stock_w_news.toml](config/predict_stock_w_news.toml), change to your own local path of the dataset and check all the models you want to run. Then go the [predict_stock_w_news.py](src/predict_stock_w_news.py).
