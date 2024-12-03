@@ -1,6 +1,6 @@
 # News topics and future stock price movement
 
-
+![wall_street](https://images.app.goo.gl/gQm9CkQAVHQZxuNV8)
 # Team members:
 [Xiangwei Peng](https://github.com/xpeng-26)
 
